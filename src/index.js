@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const homeController = require("./controllers/home.controller");
 const loginController = require("./controllers/v1/login.controller");
@@ -8,6 +9,9 @@ const userController = require("./controllers/v1/user.controller");
 
 const app = express();
 const port = process.env.APP_PORT;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", homeController.index);
 app.post("/v1/login", loginController.login);
