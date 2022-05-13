@@ -1,5 +1,5 @@
 {
-  "name": "bangkit-capstone-backend",
+  "name": "RasainApp-backend",
   "packageManager": "yarn@3.2.1",
   "dependencies": {
     "body-parser": "^1.20.0",
