@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const homeController = require("./controllers/home.controller");
 const loginController = require("./controllers/v1/login.controller");
@@ -10,6 +11,7 @@ const userController = require("./controllers/v1/user.controller");
 const app = express();
 const port = process.env.APP_PORT;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
