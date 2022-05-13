@@ -9,8 +9,8 @@ const app = express();
 const port = process.env.APP_PORT;
 
 app.get("/", homeController.index);
-app.get("/v1/login", loginController.login);
-app.get("/v1/register", registerController.register);
+app.post("/v1/login", loginController.login);
+app.post("/v1/register", registerController.register);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
