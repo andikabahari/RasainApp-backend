@@ -1,12 +1,13 @@
-const request = require("supertest");
+const supertest = require("supertest");
 const app = require("../src/app");
 
-describe("Test the root path", () => {
-  test("It should response the GET method", () => {
-    return request(app)
-      .get("/")
-      .then((response) => {
-        expect(response.statusCode).toBe(200);
-      });
+const request = supertest(app);
+
+it("Call the / endpoint", async () => {
+  const res = await request.get("/");
+  expect(res.status).toBe(200);
+  expect(res.body).toStrictEqual({
+    error: false,
+    message: "Welcome!",
   });
 });
