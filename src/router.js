@@ -7,7 +7,7 @@ const userController = require("./controllers/v1/user.controller");
 router.get("/", homeController.index);
 router.post("/v1/auth/login", authController.login);
 router.post("/v1/auth/register", authController.register);
-router.get("/v1/users", userController.all);
-router.get("/v1/users/:id", userController.find);
+router.get("/v1/users/:id", userController.getUser);
+router.put("/v1/users/:id", userController.updateUser);
 
 module.exports = router;

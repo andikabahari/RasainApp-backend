@@ -16,15 +16,7 @@ const exampleUsers = [
   },
 ];
 
-const all = (req, res) => {
-  res.json({
-    error: false,
-    message: "Users fetched successfully",
-    users: [...exampleUsers],
-  });
-};
-
-const find = (req, res) => {
+const getUser = (req, res) => {
   const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
   if (!user) {
     return res.status(404).json({
@@ -40,4 +32,20 @@ const find = (req, res) => {
   });
 };
 
-module.exports = { all, find };
+const updateUser = (req, res) => {
+  const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
+  if (!user) {
+    return res.status(404).json({
+      error: true,
+      message: "User not found",
+    });
+  }
+
+  res.json({
+    error: false,
+    message: "User updated successfully",
+    user,
+  });
+};
+
+module.exports = { getUser, updateUser };
