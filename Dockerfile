@@ -12,6 +12,8 @@ RUN yarn --pure-lockfile
 
 COPY --chown=node:node . .
 
+RUN yarn test
+
 CMD ["yarn", "start"]
 
 EXPOSE 5000
