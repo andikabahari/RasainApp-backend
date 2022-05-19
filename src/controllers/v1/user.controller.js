@@ -1,3 +1,5 @@
+const handleAsync = require("../../utils/handleAsync");
+
 const exampleUsers = [
   {
     id: 1,
@@ -16,7 +18,7 @@ const exampleUsers = [
   },
 ];
 
-const getUser = (req, res) => {
+const getUser = handleAsync(async (req, res) => {
   const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
   if (!user) {
     return res.status(404).json({
@@ -30,9 +32,9 @@ const getUser = (req, res) => {
     message: "User fetched successfully",
     user,
   });
-};
+});
 
-const updateUser = (req, res) => {
+const updateUser = handleAsync(async (req, res) => {
   const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
   if (!user) {
     return res.status(404).json({
@@ -46,6 +48,6 @@ const updateUser = (req, res) => {
     message: "User updated successfully",
     user,
   });
-};
+});
 
 module.exports = { getUser, updateUser };
