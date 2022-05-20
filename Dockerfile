@@ -1,19 +1,20 @@
 FROM node:16-alpine
 
-RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
-
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
+COPY package.json ./
+COPY yarn.lock ./
 
-USER node
+RUN yarn set version stable
+RUN yarn install
 
-RUN yarn --pure-lockfile
-
-COPY --chown=node:node . .
+COPY . .
 
 RUN yarn test
+RUN yarn workspaces focus --production
 
 CMD ["yarn", "start"]
 
 EXPOSE 5000
+
+USER node
