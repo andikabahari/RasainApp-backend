@@ -29,8 +29,8 @@ const getUser = handleAsync(async (req, res) => {
 
   res.json({
     error: false,
-    message: "User fetched successfully",
-    user,
+    message: "User found",
+    data: { user },
   });
 });
 
@@ -45,8 +45,8 @@ const updateUser = handleAsync(async (req, res) => {
 
   res.json({
     error: false,
-    message: "User updated successfully",
-    user,
+    message: "User updated",
+    data: { user },
   });
 });
 
