@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
+const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
 
 const auth = (req, res, next) => {
   const authHeader = req.headers.authorization || "";
   if (!authHeader.match(/bearer .+/i)) {
-    throw new Error("Token undefined");
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Token undefined");
   }
 
   try {
@@ -11,7 +13,8 @@ const auth = (req, res, next) => {
     req.payload = jwt.verify(token, process.env.TOKEN_SECRET);
     next();
   } catch (err) {
-    throw err;
+    console.error(err);
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid token");
   }
 };
 
