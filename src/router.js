@@ -27,9 +27,10 @@ router.get("/upload", (req, res) => {
     .writeHead(200, { "Content-Type": "text/html" })
     .end(
       "<!DOCTYPE HTML><html><body>" +
-        "<form method='post' action='/v1/prediction' enctype='multipart/form-data'>" +
+        "<form method='post' action='/v1/prediction' enctype='multipart/form-data' accept-charset='utf-8' onsubmit='submitForm'>" +
         "<input type='file' name='image'/>" +
         "<input type='submit' /></form>" +
+        "<script>function submitForm(t,e){t.preventDefault();fetch('/v1/prediction',{method:'post',headers:{'Authorization':'Bearer thisismytoken'}}).then(function(t){console.log(t.json())})}</script>" +
         "</body></html>"
     );
 });
