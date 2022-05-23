@@ -11,3 +11,5 @@
 .pnp.*
 
 .env
+
+service_account.json
