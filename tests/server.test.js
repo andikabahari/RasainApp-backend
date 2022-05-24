@@ -1,85 +1,82 @@
 const supertest = require("supertest");
 const httpStatus = require("http-status");
+const { faker } = require("@faker-js/faker");
 const app = require("../src/app");
 
 const request = supertest(app);
 
-it("GET /", async () => {
-  try {
+describe("v1", () => {
+  let token;
+  let newUser = {
+    fullName: faker.name.findName(),
+    email: faker.internet.email().toLowerCase(),
+    password: "fakepassword",
+  };
+
+  it("GET /", async () => {
     await request
       .get("/")
       .expect(httpStatus.OK)
       .expect("Content-Type", /json/)
       .field("error", false);
-  } catch (err) {
-    throw err;
-  }
-});
+  });
 
-it("POST /v1/auth/login", async () => {
-  try {
-    const body = {
-      email: "testing@example.com",
-      password: "testing!w43b9m",
-    };
+  it("POST /v1/auth/register", async () => {
     const res = await request
-      .post("/v1/auth/login")
-      .send(body)
+      .post("/v1/auth/register")
+      .send(newUser)
       .expect(httpStatus.OK)
       .expect("Content-Type", /json/);
     expect(res.body).toHaveProperty("error", false);
-  } catch (err) {
-    throw err;
-  }
-});
+  });
 
-it("POST /v1/auth/register", async () => {
-  try {
-    const body = {
-      fullName: "Testing",
-      email: "testing@example.com",
-      password: "testing!w43b9m",
-    };
+  it("POST /v1/auth/login", async () => {
     const res = await request
-      .post("/v1/auth/register")
-      .send(body)
+      .post("/v1/auth/login")
+      .send({
+        email: newUser.email,
+        password: newUser.password,
+      })
       .expect(httpStatus.OK)
       .expect("Content-Type", /json/);
-    expect(res.body).toHaveProperty("error", true);
-  } catch (err) {
-    throw err;
-  }
-});
+    expect(res.body).toHaveProperty("error", false);
+    expect(res.body).toHaveProperty("data");
+    expect(res.body.data).toHaveProperty("user");
+    expect(res.body.data).toHaveProperty("token");
+    token = res.body.data.token;
+    newUser.userId = res.body.data.user.userId;
+  });
 
-it("GET /v1/users/:id", async () => {
-  try {
-    const userId = 1;
-    await request
-      .get(`/v1/users/${userId}`)
+  it("GET /v1/users/:id", async () => {
+    const res = await request
+      .get(`/v1/users/${newUser.userId}`)
       .expect(httpStatus.OK)
-      .expect("Content-Type", /json/)
-      .field("error", false);
-  } catch (err) {
-    throw err;
-  }
-});
+      .expect("Content-Type", /json/);
+    expect(res.body).toHaveProperty("error", false);
+    expect(res.body).toHaveProperty("data");
+    expect(res.body.data).toHaveProperty("user");
+  });
 
-it("PUT /v1/users/:id", async () => {
-  try {
-    const userId = 1;
-    const token = "randomtokenstring";
-    const body = {
-      fullName: "Testing",
-      email: "testing@example.com",
-      password: "testing!w43b9m",
-    };
-    await request
-      .put(`/v1/users/${userId}`)
+  it("PUT /v1/users/:id", async () => {
+    newUser.fullName = faker.name.findName();
+    const res = await request
+      .put(`/v1/users/${newUser.userId}`)
       .set("Authorization", `Bearer ${token}`)
-      .send(body)
+      .send({ fullName: newUser.fullName })
       .expect(httpStatus.OK)
       .expect("Content-Type", /json/);
-  } catch (err) {
-    throw err;
-  }
+    expect(res.body).toHaveProperty("error", false);
+    expect(res.body).toHaveProperty("data");
+    expect(res.body.data).toHaveProperty("user");
+  });
+
+  it("POST /v1/prediction", async () => {
+    const res = await request
+      .post(`/v1/prediction`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(httpStatus.OK)
+      .expect("Content-Type", /json/);
+    expect(res.body).toHaveProperty("error", false);
+    expect(res.body).toHaveProperty("data");
+  });
 });
