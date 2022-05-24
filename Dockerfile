@@ -15,6 +15,6 @@ RUN yarn workspaces focus --production
 
 CMD ["yarn", "start"]
 
-EXPOSE 5000
+EXPOSE 8080
 
 USER node
