@@ -6,13 +6,19 @@ const db = require("../../utils/db");
 const hash = require("../../utils/hash");
 const generateToken = require("../../utils/generateToken");
 const ApiError = require("../../utils/ApiError");
+const authValidation = require("../../validations/auth.validation");
 
 const login = handleAsync(async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    await authValidation.login.validateAsync(req.body);
+  } catch (err) {
+    throw new ApiError(httpStatus.BAD_REQUEST, err.message);
+  }
 
   try {
-    const usersRef = await db.collection("users");
+    const { email, password } = req.body;
 
+    const usersRef = await db.collection("users");
     const usersRes = await usersRef.where("email", "==", email).get();
     if (usersRes.size === 0) {
       return res.json({
@@ -51,16 +57,21 @@ const login = handleAsync(async (req, res) => {
 });
 
 const register = handleAsync(async (req, res) => {
-  const { fullName, email, password } = req.body;
+  try {
+    await authValidation.register.validateAsync(req.body);
+  } catch (err) {
+    throw new ApiError(httpStatus.BAD_REQUEST, err.message);
+  }
 
   try {
-    const usersRef = await db.collection("users");
+    const { fullName, email, password } = req.body;
 
+    const usersRef = await db.collection("users");
     const usersRes = await usersRef.where("email", "==", email).get();
     if (usersRes.size > 0) {
       return res.json({
         error: true,
-        message: "Email already taken",
+        message: "Email is already taken",
       });
     }
 
