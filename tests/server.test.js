@@ -22,12 +22,12 @@ it("POST /v1/auth/login", async () => {
       email: "testing@example.com",
       password: "testing!w43b9m",
     };
-    await request
+    const res = await request
       .post("/v1/auth/login")
-      .attach(body)
+      .send(body)
       .expect(httpStatus.OK)
-      .expect("Content-Type", /json/)
-      .field("error", false);
+      .expect("Content-Type", /json/);
+    expect(res.body).toHaveProperty("error", false);
   } catch (err) {
     throw err;
   }
@@ -40,12 +40,12 @@ it("POST /v1/auth/register", async () => {
       email: "testing@example.com",
       password: "testing!w43b9m",
     };
-    await request
+    const res = await request
       .post("/v1/auth/register")
-      .attach(body)
+      .send(body)
       .expect(httpStatus.OK)
-      .expect("Content-Type", /json/)
-      .field("error", true);
+      .expect("Content-Type", /json/);
+    expect(res.body).toHaveProperty("error", true);
   } catch (err) {
     throw err;
   }
@@ -76,10 +76,9 @@ it("PUT /v1/users/:id", async () => {
     await request
       .put(`/v1/users/${userId}`)
       .set("Authorization", `Bearer ${token}`)
-      .attach(body)
+      .send(body)
       .expect(httpStatus.OK)
-      .expect("Content-Type", /json/)
-      .field("error", false);
+      .expect("Content-Type", /json/);
   } catch (err) {
     throw err;
   }
