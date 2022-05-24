@@ -79,7 +79,7 @@ const register = handleAsync(async (req, res) => {
       fullName,
       email,
       password: hash(password),
-      createdAt: moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      createdDate: moment(new Date()).format("YYYY-MM-DD"),
     });
 
     res.json({
