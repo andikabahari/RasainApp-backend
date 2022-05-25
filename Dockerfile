@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY yarn.lock ./
+COPY .yarnrc.yml ./
+COPY .yarn .yarn/
 
 RUN yarn set version 3.2.1
 RUN yarn install
