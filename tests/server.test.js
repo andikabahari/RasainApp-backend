@@ -47,36 +47,36 @@ describe("v1", () => {
     newUser.userId = res.body.data.user.userId;
   });
 
-  it("GET /v1/users/:id", async () => {
-    const res = await request
-      .get(`/v1/users/${newUser.userId}`)
-      .expect(httpStatus.OK)
-      .expect("Content-Type", /json/);
-    expect(res.body).toHaveProperty("error", false);
-    expect(res.body).toHaveProperty("data");
-    expect(res.body.data).toHaveProperty("user");
-  });
+  // it("GET /v1/users/:id", async () => {
+  //   const res = await request
+  //     .get(`/v1/users/${newUser.userId}`)
+  //     .expect(httpStatus.OK)
+  //     .expect("Content-Type", /json/);
+  //   expect(res.body).toHaveProperty("error", false);
+  //   expect(res.body).toHaveProperty("data");
+  //   expect(res.body.data).toHaveProperty("user");
+  // });
 
-  it("PUT /v1/users/:id", async () => {
-    newUser.fullName = faker.name.findName();
-    const res = await request
-      .put(`/v1/users/${newUser.userId}`)
-      .set("Authorization", `Bearer ${token}`)
-      .send({ fullName: newUser.fullName })
-      .expect(httpStatus.OK)
-      .expect("Content-Type", /json/);
-    expect(res.body).toHaveProperty("error", false);
-    expect(res.body).toHaveProperty("data");
-    expect(res.body.data).toHaveProperty("user");
-  });
+  // it("PUT /v1/users/:id", async () => {
+  //   newUser.fullName = faker.name.findName();
+  //   const res = await request
+  //     .put(`/v1/users/${newUser.userId}`)
+  //     .set("Authorization", `Bearer ${token}`)
+  //     .send({ fullName: newUser.fullName })
+  //     .expect(httpStatus.OK)
+  //     .expect("Content-Type", /json/);
+  //   expect(res.body).toHaveProperty("error", false);
+  //   expect(res.body).toHaveProperty("data");
+  //   expect(res.body.data).toHaveProperty("user");
+  // });
 
-  it("POST /v1/prediction", async () => {
-    const res = await request
-      .post(`/v1/prediction`)
-      .set("Authorization", `Bearer ${token}`)
-      .expect(httpStatus.OK)
-      .expect("Content-Type", /json/);
-    expect(res.body).toHaveProperty("error", false);
-    expect(res.body).toHaveProperty("data");
-  });
+  // it("POST /v1/prediction", async () => {
+  //   const res = await request
+  //     .post(`/v1/prediction`)
+  //     .set("Authorization", `Bearer ${token}`)
+  //     .expect(httpStatus.OK)
+  //     .expect("Content-Type", /json/);
+  //   expect(res.body).toHaveProperty("error", false);
+  //   expect(res.body).toHaveProperty("data");
+  // });
 });
