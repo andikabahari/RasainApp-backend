@@ -1,0 +1,6 @@
+APP_PORT=8080
+SALT_ROUNDS=10
+TOKEN_SECRET=RasainAppCapstone
+GCP_PROJECT_ID=rasainapp
+GCP_SERVICE_ACCOUNT_KEY="./service_account.json"
+TENSORFLOW_SAVED_MODEL="./bin/SavedModel/model.json"

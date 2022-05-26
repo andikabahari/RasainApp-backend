@@ -1,25 +1,8 @@
 const handleAsync = require("../../utils/handleAsync");
-
-const exampleUsers = [
-  {
-    id: 1,
-    fullName: "Pat Metheny",
-    email: "patmetheny@example.com",
-  },
-  {
-    id: 2,
-    fullName: "Allan Holdsworth",
-    email: "allan@example.com",
-  },
-  {
-    id: 3,
-    fullName: "Plini",
-    email: "plini@example.com",
-  },
-];
+const db = require("../../utils/db");
 
 const getUser = handleAsync(async (req, res) => {
-  const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
+  const user = await db.collection("users").where(doc.id, '==', req.params.id).get();
   if (!user) {
     return res.status(404).json({
       error: true,
@@ -35,7 +18,8 @@ const getUser = handleAsync(async (req, res) => {
 });
 
 const updateUser = handleAsync(async (req, res) => {
-  const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
+  //const user = exampleUsers.filter(({ id }) => id == req.params.id)[0];
+  const user = await db.collection("users").where(doc.id, '==', req.params.id).get();
   if (!user) {
     return res.status(404).json({
       error: true,
