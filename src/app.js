@@ -6,6 +6,7 @@ const httpStatus = require("http-status");
 const router = require("./router");
 const errorLogger = require("./middlewares/errorLogger");
 const errorHandler = require("./middlewares/errorHandler");
+const errorConverter = require("./middlewares/errorConverter");
 const ApiError = require("./utils/ApiError");
 
 const app = express();
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 });
 app.use(errorLogger);
+app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
