@@ -10,6 +10,14 @@ const getPredictions = handleAsync(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "File not attached");
   }
 
+  const MB = 1024 ** 2;
+  if (req.file.size > 1.5 * MB) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "File size cannot be more than 1.5 MB"
+    );
+  }
+
   const fileExtension = req.file.mimetype.split("/")[1];
   const allowedExtensions = ["jpg", "jpeg", "png", "bmp", "gif"];
   if (!allowedExtensions.includes(fileExtension)) {
@@ -23,7 +31,10 @@ const getPredictions = handleAsync(async (req, res) => {
   const labelsRes = await labelsRef.orderBy("createdAt").limit(1).get();
   const labels = labelsRes.docs[0].data().labels;
 
-  const imageBuf = await sharp(req.file.buffer).resize(150, 150).toBuffer();
+  const imageBuf = await sharp(req.file.buffer)
+    .resize(150, 150)
+    .removeAlpha()
+    .toBuffer();
   const imageUint = Uint8Array.from(imageBuf);
   const scores = await predict(imageUint);
 
