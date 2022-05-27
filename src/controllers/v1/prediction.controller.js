@@ -2,18 +2,8 @@ const httpStatus = require("http-status");
 const sharp = require("sharp");
 const handleAsync = require("../../utils/handleAsync");
 const predict = require("../../utils/predict");
+const db = require("../../utils/db");
 const ApiError = require("../../utils/ApiError");
-
-const labels = [
-  "bakso",
-  "klepon",
-  "nasi-goreng",
-  "onde-onde",
-  "pastel",
-  "rendang",
-  "sate",
-  "tahu-petis",
-];
 
 const getPredictions = handleAsync(async (req, res) => {
   if (!req.file) {
@@ -28,6 +18,10 @@ const getPredictions = handleAsync(async (req, res) => {
       "File extension must be: " + allowedExtensions.join(", ")
     );
   }
+
+  const labelsRef = await db.collection("labels");
+  const labelsRes = await labelsRef.orderBy("createdAt").limit(1).get();
+  const labels = labelsRes.docs[0].data().labels;
 
   const imageBuf = await sharp(req.file.buffer).resize(150, 150).toBuffer();
   const imageUint = Uint8Array.from(imageBuf);
