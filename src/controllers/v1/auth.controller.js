@@ -37,8 +37,8 @@ const login = handleAsync(async (req, res) => {
         userId,
         fullName: user.fullName,
         email: user.email,
+        token,
       },
-      token,
     },
   });
 });
