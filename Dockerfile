@@ -9,11 +9,9 @@ COPY .yarn .yarn/
 
 RUN yarn set version 3.2.1
 RUN yarn install
+RUN yarn workspaces focus --production
 
 COPY . .
-
-RUN yarn test
-RUN yarn workspaces focus --production
 
 CMD ["yarn", "start"]
 
