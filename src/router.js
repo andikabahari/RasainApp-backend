@@ -27,10 +27,10 @@ router.post(
 router.get("/v1/users/:id", userController.getUser);
 router.put("/v1/users/:id", auth, userController.updateUser);
 router.post(
-  "/v1/prediction",
+  "/v1/predictions",
   auth,
   upload.single("image"),
-  predictionController.getPrediction
+  predictionController.getPredictions
 );
 
 module.exports = router;
