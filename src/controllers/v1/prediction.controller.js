@@ -34,6 +34,8 @@ const getPredictions = handleAsync(async (req, res) => {
   const imageUint = Uint8Array.from(imageBuf);
   const scores = await predict(imageUint);
 
+  labels.sort();
+
   let predictions = [];
   for (let i = 0; i < scores.length; i++) {
     if (labels[i] && scores[i] > 0) {
