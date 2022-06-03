@@ -1,10 +1,8 @@
-const ApiError = require("./utils/ApiError");
 const httpStatus = require("http-status");
+const ApiError = require("../utils/ApiError");
 
-const notFoundHandler = (err, req, res, next) => {
-    const err = new ApiError(httpStatus.NOT_FOUND, "Not found");
-    next(err);
+const notFoundHandler = (req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 };
-  
+
 module.exports = notFoundHandler;
-  
