@@ -94,7 +94,7 @@ To install production-only dependencies, run `yarn workspaces focus --production
 Parameters:
 
 - `email` string \*required
-- `password` string \*required
+- `password` string \*required.
 
 ### POST /v1/auth/register
 
@@ -102,33 +102,33 @@ Parameters:
 
 - `fullName` string \*required
 - `email` string \*required
-- `password` string \*required
+- `password` string \*required.
 
 ### GET /v1/users/{id}
 
 Parameters:
 
-- `id` path \*required
+- `id` string (path) \*required.
 
 ### PUT /v1/users/{id}
 
 Headers:
 
-- `Authorization: Bearer your_token`
+- `Authorization: Bearer your_token`.
 
 Parameters:
 
-- `id` path \*required
+- `id` string (path) \*required
 - `fullName` string
 - `email` string
-- `password` string
+- `password` string.
 
 ### POST /v1/predictions
 
 Headers:
 
-- `Authorization: Bearer your_token`
+- `Authorization: Bearer your_token`.
 
 Parameters:
 
-- `image` file (multipart/form-data) \*required
+- `image` file (multipart/form-data) \*required.
