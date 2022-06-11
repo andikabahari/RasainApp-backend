@@ -1,4 +1,3 @@
-const httpStatus = require("http-status");
 const moment = require("moment");
 const bcrypt = require("bcrypt");
 const handleAsync = require("../../utils/handleAsync");
