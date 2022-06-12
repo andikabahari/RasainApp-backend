@@ -8,6 +8,8 @@ RasainApp-backend is a part of RasainApp project for Bangkit 2022 Capstone Proje
 | [RasainApp-backend](https://github.com/andikabahari/RasainApp-backend) | Backend service.     |
 | [RasainApp-ml](https://github.com/agistarakha/RasainApp-ml)            | Machine learning.    |
 
+# Usage
+
 ## Requirements
 
 - Node.js v16
