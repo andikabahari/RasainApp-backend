@@ -4,13 +4,11 @@
 
 RasainApp-backend is a part of RasainApp project for Bangkit 2022 Capstone Project.
 
-RasainApp-backend is a web application built using Node.js technology to provide a RESTful API service for the RasainApp project. This web application will be deployed in a cloud environment using a serverless container service--Google Cloud Platform's Cloud Run.
-
-## Cloud Architecture
-
 <p align="center">
 <img src="https://raw.githubusercontent.com/andikabahari/RasainApp-backend/main/.assets/cloud-architecture-rev.png" height="240" />
 </p>
+
+RasainApp-backend is a web application built using Node.js technology to provide a RESTful API service for the RasainApp project. This web application will be deployed in a cloud environment using a serverless container service--Google Cloud Platform's Cloud Run.
 
 ## Related Projects
 
